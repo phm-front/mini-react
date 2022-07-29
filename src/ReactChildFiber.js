@@ -4,7 +4,6 @@ import { isArray, isStringOrNumber } from "./utils";
 export function reconcileChildren(wip, children) {
   if (isStringOrNumber(children)) return
   const newChildren = isArray(children) ? children : [children]
-  // console.log(newChildren)
   let preFiber = null
   for (let i = 0; i < newChildren.length; i++) {
     if (newChildren[i] === null) continue
@@ -16,5 +15,4 @@ export function reconcileChildren(wip, children) {
     }
     preFiber = newFiber
   }
-  console.log(wip)
 }
