@@ -85,7 +85,7 @@ function commitWorker(wip) {
   if (!wip) return
   // 提交自己
   const parentNode = wip.return.stateNode
-  console.log(parentNode)
+  // console.log(parentNode)
   const { flags, stateNode } = wip
   if (flags & Placement && stateNode) {
     parentNode.appendChild(stateNode)
