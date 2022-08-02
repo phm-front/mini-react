@@ -6,6 +6,7 @@ class ReactDOMRoot {
     this._internalRoot = internalRoot
   }
   render(children) {
+    // console.log(children)
     const root = this._internalRoot
     updateContainer(children, root)
   }

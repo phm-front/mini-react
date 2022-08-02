@@ -84,8 +84,7 @@ function commitRoot() {
 function commitWorker(wip) {
   if (!wip) return
   // 提交自己
-  const parentNode = wip.return.stateNode
-  // console.log(parentNode)
+  const parentNode = getParentNode(wip.return)
   const { flags, stateNode } = wip
   if (flags & Placement && stateNode) {
     parentNode.appendChild(stateNode)
@@ -94,6 +93,17 @@ function commitWorker(wip) {
   commitWorker(wip.child)
   // 提交兄弟节点
   commitWorker(wip.sibling)
+}
+
+// 获取父dom节点
+function getParentNode(wip) {
+  let tem = wip;
+  while (tem) {
+    if (tem.stateNode) {
+      return tem.stateNode;
+    }
+    tem = tem.return;
+  }
 }
 
 requestIdleCallback(workLoop)

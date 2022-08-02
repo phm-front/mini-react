@@ -11,7 +11,25 @@ export function updateHostComponent(wip) {
   // 处理children
   reconcileChildren(wip, wip.props.children)
 }
-export function updateFunctionComponent() {}
-export function updateClassComponent() {}
-export function updateFragmentComponent() {}
-export function updateHostTextComponent() {}
+// 函数组件
+export function updateFunctionComponent(wip) {
+  const children = wip.type(wip.props)
+  reconcileChildren(wip, children)
+}
+// 类组件
+export function updateClassComponent(wip) {
+  const instance = new wip.type(wip.props)
+  const children = instance.render()
+  // console.log(children)
+  reconcileChildren(wip, children)
+}
+export function updateFragmentComponent(wip) {
+  // 处理children
+  reconcileChildren(wip, wip.props.children)
+}
+// 文本节点
+export function updateHostTextComponent(wip) {
+  if (!wip.stateNode) {
+    wip.stateNode = document.createTextNode(wip.props.children)
+  }
+}
