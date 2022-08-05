@@ -1,5 +1,6 @@
 import { reconcileChildren } from "./ReactChildFiber"
 import { updateNode } from "./utils"
+import { renderWithHooks } from './hooks'
 
 // 更新原生标签
 export function updateHostComponent(wip) {
@@ -13,6 +14,8 @@ export function updateHostComponent(wip) {
 }
 // 函数组件
 export function updateFunctionComponent(wip) {
+  // hooks获取当前函数组件fiber
+  renderWithHooks(wip)
   const children = wip.type(wip.props)
   reconcileChildren(wip, children)
 }

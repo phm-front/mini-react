@@ -13,7 +13,8 @@ import {
   updateHostComponent,
   updateHostTextComponent,
 } from "./ReactFiberReconciler";
-import { Placement } from "./utils";
+import { Placement, Update, updateNode } from "./utils";
+import { scheduleCallback } from "./scheduler";
 
 let wip = null; // work in progress 当前正在工作中的fiber
 let wipRoot = null;
@@ -21,6 +22,7 @@ let wipRoot = null;
 export function scheduleUpdateOnFiber(fiber) {
   wip = fiber
   wipRoot = fiber
+  scheduleCallback(workLoop)
 }
 
 export function performUnitOfWork() {
@@ -86,8 +88,14 @@ function commitWorker(wip) {
   // 提交自己
   const parentNode = getParentNode(wip.return)
   const { flags, stateNode } = wip
+  // 新增、插入、移动
   if (flags & Placement && stateNode) {
     parentNode.appendChild(stateNode)
+  }
+  // 更新
+  if (flags & Update && stateNode) {
+    // 更新属性
+    updateNode(stateNode, wip.alternate.props, wip.props)
   }
   // 提交子节点
   commitWorker(wip.child)
@@ -106,4 +114,4 @@ function getParentNode(wip) {
   }
 }
 
-requestIdleCallback(workLoop)
+// requestIdleCallback(workLoop)

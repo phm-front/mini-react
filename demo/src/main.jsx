@@ -1,7 +1,27 @@
-import { ReactDOM, Component } from "../which-react";
+import { ReactDOM, Component, useReducer, useState } from "../which-react";
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { counter: state.counter + 1 }
+    default:
+      break;
+  }
+  return state
+}
 
 function FunctionComponent(props) {
-  return <div>{props.name}</div>;
+  const [state, dispatch] = useReducer(reducer, { counter: 1 })
+  const [num, setNum] = useState(0)
+  return (
+    <div>
+      <div>{props.name}</div>
+      <div>counter：{ state.counter }</div>
+      <button onClick={ () => dispatch({ type: 'increment' }) }>counter+1</button>
+      <div>num：{num}</div>
+      <button onClick={ () => setNum(num + 1) }>num+1</button>
+    </div>
+  );
 }
 
 class ClassComponent extends Component {
