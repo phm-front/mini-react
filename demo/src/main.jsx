@@ -1,4 +1,11 @@
-import { ReactDOM, Component, useReducer, useState } from "../which-react";
+import {
+  ReactDOM,
+  Component,
+  useReducer,
+  useState,
+  useEffect,
+  useLayoutEffect,
+} from "../which-react";
 
 function reducer(state, action) {
   switch (action.type) {
@@ -13,6 +20,12 @@ let nums = [0, 1, 2, 3, 4];
 function FunctionComponent(props) {
   const [state, dispatch] = useReducer(reducer, { counter: 1 });
   const [count2, setCount2] = useState(0);
+  // useEffect(() => {
+  //   console.log(state);
+  // }, [state])
+  useLayoutEffect(() => {
+    console.log(count2);
+  }, [count2])
   return (
     <div>
       <div>{props.name}</div>

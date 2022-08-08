@@ -9,8 +9,8 @@ import {
   Component,
   useReducer,
   useState,
-  // useEffect,
-  // useLayoutEffect,
+  useEffect,
+  useLayoutEffect,
 } from "../src/react";
 import ReactDOM from "../src/react-dom";
 
@@ -19,4 +19,6 @@ export {
   useReducer,
   useState,
   Component,
+  useEffect,
+  useLayoutEffect
 };

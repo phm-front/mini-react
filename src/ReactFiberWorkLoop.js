@@ -123,6 +123,9 @@ function commitWorker(wip) {
     // 删除wip的子节点
     commitDeletions(wip.deletions, stateNode || parentNode);
   }
+  if (wip.tag === FunctionComponent) {
+    invokeHooks(wip);
+  }
   // 提交子节点
   commitWorker(wip.child)
   // 提交兄弟节点
@@ -155,6 +158,23 @@ function getParentNode(wip) {
       return tem.stateNode;
     }
     tem = tem.return;
+  }
+}
+
+function invokeHooks(wip) {
+  const { updateQueueOfEffect, updateQueueOfLayout } = wip;
+
+  for (let i = 0; i < updateQueueOfLayout.length; i++) {
+    const effect = updateQueueOfLayout[i];
+    effect.create();
+  }
+
+  for (let i = 0; i < updateQueueOfEffect.length; i++) {
+    const effect = updateQueueOfEffect[i];
+
+    scheduleCallback(() => {
+      effect.create();
+    });
   }
 }
 

@@ -1,7 +1,9 @@
 import Component from './Component'
-import { useReducer, useState } from './hooks'
+import { useReducer, useState, useEffect, useLayoutEffect } from './hooks'
 export {
   Component,
   useReducer,
-  useState
+  useState,
+  useEffect,
+  useLayoutEffect
 }
