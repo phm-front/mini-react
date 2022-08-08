@@ -25,7 +25,7 @@ export function createFiber(vnode, returnFiber) {
     return: returnFiber,
     // 行为
     flags: Placement,
-    // 索引位置
+    // 索引位置 下标
     index: null,
     // old fiber
     alternate: null,
